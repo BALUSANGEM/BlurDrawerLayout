@@ -1,4 +1,4 @@
-package org.avantari.blurdrawerlayout
+package org.nosort.blurdrawerlayout
 
 import android.content.Context
 import android.graphics.*
