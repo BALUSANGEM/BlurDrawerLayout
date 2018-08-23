@@ -21,7 +21,6 @@ Kotlin, Android version >= 17
  }
  
  //dependency
- 
  implementation 'org.nosort.blurdrawerlayout:blurdrawerlayout:1.0.0'
  
 ```
