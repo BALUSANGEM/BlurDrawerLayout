@@ -13,7 +13,7 @@ Kotlin, Android version >= 17
 
 #### Add dependencies
 
-```
+```groovy
  repositories {
   maven{
    url "https://dl.bintray.com/balusangem/maven/"
@@ -28,7 +28,7 @@ Kotlin, Android version >= 17
 
 #### Set up renderscript
 
-```
+```groovy
   defaultConfig {
     renderscriptTargetApi 19
     renderscriptSupportModeEnabled true
@@ -38,7 +38,7 @@ Kotlin, Android version >= 17
 
 #### Simple usage
 
-```
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <org.nosort.blurdrawerlayout.BlurDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
