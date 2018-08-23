@@ -11,7 +11,7 @@ Kotlin, Android version >= 17
 ## Adding to Project
 
 
-#### Add dependencies
+#### Add dependencies in gradle
 
 ```groovy
  repositories {
