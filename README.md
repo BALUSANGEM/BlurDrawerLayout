@@ -3,6 +3,7 @@ DrawerLayout with blur functionality like iOS
  
  [ ![Download](https://api.bintray.com/packages/balusangem/maven/blurdrawerlayout/images/download.svg) ](https://bintray.com/balusangem/maven/blurdrawerlayout/_latestVersion)
  
+![Alt Text](https://github.com/BALUSANGEM/BlurDrawerLayout/blob/master/blurleft.gif)
 ![alt text](https://github.com/BALUSANGEM/BlurDrawerLayout/blob/master/BlurScreenShot1.png)
 ![alt text](https://github.com/BALUSANGEM/BlurDrawerLayout/blob/master/BlurScreenshot2.png)
 
