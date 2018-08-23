@@ -3,11 +3,11 @@ package org.nosort.blurdrawerlayout
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
-import android.os.Build
+import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
-import android.view.ViewTreeObserver
 import android.widget.ScrollView
 
 
@@ -26,48 +26,7 @@ class BlurDrawerLayout : DrawerLayout {
         initAll()
     }
 
-    private fun getColor(color: Int): Int =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                resources.getColor(color, null)
-            } else {
-                resources.getColor(color)
-            }
-
-
-    private fun initAll() {
-        viewTreeObserver.addOnPreDrawListener(onPredrawListener)
-    }
-
-    private lateinit var draggingView: View
-    private lateinit var contentView: View
-    private val onPredrawListener = object : ViewTreeObserver.OnPreDrawListener {
-        override fun onPreDraw(): Boolean {
-            if (childCount != 2) {
-                throw NotImplementedError("BlurDrawerLayout Should have two childs")
-            }
-            contentView = getChildAt(0)
-            draggingView = getChildAt(1)
-
-            addDrawerListener(drawerListener)
-            draggingView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-                override fun onGlobalLayout() {
-                    draggingView.setBackgroundColor(getColor(android.R.color.black))
-                    draggingView.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                }
-            })
-            viewTreeObserver.removeOnPreDrawListener(this)
-            return false
-        }
-    }
-
-    private fun refreshBitmaps() {
-        if (backImageCopy == null) {
-            createBackgroundBitmap()
-        }
-        setBackgroundToDraggingView()
-    }
-
-    private var drawerListener = object : DrawerListener {
+    private val drawerListener = object : DrawerListener {
         override fun onDrawerStateChanged(state: Int) =
                 when (state) {
                     DrawerLayout.STATE_DRAGGING -> refreshBitmaps()
@@ -86,13 +45,40 @@ class BlurDrawerLayout : DrawerLayout {
         }
     }
 
+    private val preDrawController: PreDrawController = DefaultPreDrawController(this, drawerListener)
+    private var blurAlgorithm: BlurAlgorithm = DefaultBlurBuilder()
+
+    private fun initAll() {
+        viewTreeObserver.addOnPreDrawListener(preDrawController.onPredrawListener)
+    }
+
+    private fun refreshBitmaps() {
+        val layoutParams = draggingView.layoutParams as DrawerLayout.LayoutParams
+        val isStart = layoutParams.gravity == GravityCompat.START
+        if (backImageCopy == null) {
+            createBackgroundBitmap(isStart)
+        }
+        setBackgroundToDraggingView(isStart)
+
+    }
+
+
+    private val draggingView by lazy {
+        getChildAt(1)
+    }
+
+    private val contentView by lazy {
+        getChildAt(0)
+    }
+
 
     private val contentViewRectangle = Rect()
     private val drageeRect = Rect()
-    private fun setBackgroundToDraggingView() =
+    private fun setBackgroundToDraggingView(isStart: Boolean) =
             try {
                 draggingView.getLocalVisibleRect(drageeRect)
-                val generateBitmap = generateNewDragBackground(drageeRect)
+                Log.d(TAG, "setBackgroundToDraggingView drageeRect:${drageeRect.flattenToString()}")
+                val generateBitmap = generateNewDragBackground(drageeRect, isStart)
                 draggingView.background = BitmapDrawable(resources, generateBitmap)
             } catch (e: IllegalArgumentException) {
                 e.printStackTrace()
@@ -107,11 +93,15 @@ class BlurDrawerLayout : DrawerLayout {
         Color.argb(95, 255, 255, 255)
     }
 
-    private fun generateNewDragBackground(rect: Rect): Bitmap {
+    private fun generateNewDragBackground(rect: Rect, isStart: Boolean): Bitmap {
         val emptyBitmap = emptyDrageeBitmap
         Canvas(emptyBitmap).apply {
             drawBitmap(emptyBitmap, Matrix(), null)
-            drawBitmap(backImageCopy, rect.left.toFloat(), rect.top.toFloat(), null)
+            if (isStart) {
+                drawBitmap(backImageCopy, rect.left.toFloat(), rect.top.toFloat(), null)
+            } else {
+                drawBitmap(backImageCopy, rect.right.toFloat() - emptyBitmap.width, rect.top.toFloat(), null)
+            }
             drawColor(transprentWhiteColor)
         }
         return emptyBitmap
@@ -141,11 +131,20 @@ class BlurDrawerLayout : DrawerLayout {
 
     private lateinit var mainContentBitmap: Bitmap
 
-    private fun createBackgroundBitmap() {
+    private fun createBackgroundBitmap(isStart: Boolean) {
         mainContentBitmap = generateBitmap(contentView)
         contentView.getLocalVisibleRect(contentViewRectangle)
-        val backImageBitmap = Bitmap.createBitmap(mainContentBitmap, 0, contentViewRectangle.top, draggingView.width, contentViewRectangle.height())
-        val blurbackImageCopy = BlurBuilder().blur(context, backImageBitmap)
+        val backImageBitmap =
+                if (isStart)
+                    Bitmap.createBitmap(mainContentBitmap, 0, contentViewRectangle.top, draggingView.width, contentViewRectangle.height())
+                else
+                    Bitmap.createBitmap(mainContentBitmap, contentViewRectangle.right - draggingView.width, contentViewRectangle.top, draggingView.width, contentViewRectangle.height())
+
+        val blurbackImageCopy = blurAlgorithm.blur(context, backImageBitmap)
         backImageCopy = Bitmap.createScaledBitmap(blurbackImageCopy, draggingView.width, draggingView.height, false)
+    }
+
+    fun setBlurAlgorithm(blurAlgorithm: BlurAlgorithm) {
+        this.blurAlgorithm = blurAlgorithm
     }
 }
