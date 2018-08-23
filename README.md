@@ -6,9 +6,26 @@ DrawerLayout with blur functionality like iOS
 ### Requirements
 Kotlin, Android version >= 17
 
-### Adding to Project
+## Adding to Project
 
-Set up renderscript
+
+#### Add dependencies
+
+```
+ repositories {
+  maven{
+   url "https://dl.bintray.com/balusangem/maven/"
+  }
+ }
+ 
+ //dependency
+ 
+ implementation 'org.nosort.blurdrawerlayout:blurdrawerlayout:1.0.0'
+ 
+```
+
+#### Set up renderscript
+
 ```
   defaultConfig {
     renderscriptTargetApi 19
@@ -16,7 +33,9 @@ Set up renderscript
   }
 ```
 
-BlurDrawerLayout usage
+
+#### Simple usage
+
 ```
 <?xml version="1.0" encoding="utf-8"?>
 <org.nosort.blurdrawerlayout.BlurDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
