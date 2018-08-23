@@ -15,13 +15,11 @@ Kotlin, Android version >= 17
 
 ```groovy
  repositories {
-  maven{
-   url "https://dl.bintray.com/balusangem/maven/"
-  }
+  jcenter()
  }
  
  //dependency
- implementation 'org.nosort.blurdrawerlayout:blurdrawerlayout:1.0.0'
+ implementation 'org.nosort.blurdrawerlayout:blurdrawerlayout:1.1.0'
  
 ```
 
