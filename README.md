@@ -64,3 +64,5 @@ Kotlin, Android version >= 17
 
 </org.nosort.blurdrawerlayout.BlurDrawerLayout>
 ```
+
+//TODO adding support for DrawerLayout with gravity END
