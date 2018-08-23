@@ -1,12 +1,11 @@
 # BlurDrawerLayout
 DrawerLayout with blur functionality like iOS
-
-Works with both START and END Gravity
  
  [ ![Download](https://api.bintray.com/packages/balusangem/maven/blurdrawerlayout/images/download.svg) ](https://bintray.com/balusangem/maven/blurdrawerlayout/_latestVersion)
  
 ![alt text](https://github.com/BALUSANGEM/BlurDrawerLayout/blob/master/BlurScreenShot1.png)
 ![alt text](https://github.com/BALUSANGEM/BlurDrawerLayout/blob/master/BlurScreenshot2.png)
+
 ### Requirements
 Kotlin, Android version >= 17
 
@@ -64,4 +63,13 @@ Kotlin, Android version >= 17
 
 </org.nosort.blurdrawerlayout.BlurDrawerLayout>
 ```
+
+
+
+#### Works with DrawerLayout child Gravity RIGHT
+
+![alt text](https://github.com/BALUSANGEM/BlurDrawerLayout/blob/master/blurscreenshot3.png)
+![alt text](https://github.com/BALUSANGEM/BlurDrawerLayout/blob/master/blurscreenshot4.png)
+
+
 
