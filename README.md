@@ -3,7 +3,7 @@ DrawerLayout with blur functionality like iOS
 
 ![alt text](https://github.com/BALUSANGEM/BlurDrawerLayout/blob/master/BlurScreenShot1.png)
 ![alt text](https://github.com/BALUSANGEM/BlurDrawerLayout/blob/master/BlurScreenshot2.png)
-## Requirements
+### Requirements
 Kotlin, Android version >= 17
 
 ### Adding to Project
