@@ -2,6 +2,7 @@
 DrawerLayout with blur functionality like iOS
  
  [ ![Download](https://api.bintray.com/packages/balusangem/maven/blurdrawerlayout/images/download.svg) ](https://bintray.com/balusangem/maven/blurdrawerlayout/_latestVersion)
+ [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-BlurDrawerLayout-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/7080)
  
 ![Alt Text](https://github.com/BALUSANGEM/BlurDrawerLayout/blob/master/blurleft.gif)
 ![alt text](https://github.com/BALUSANGEM/BlurDrawerLayout/blob/master/BlurScreenShot1.png)
